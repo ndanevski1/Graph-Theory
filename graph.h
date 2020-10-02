@@ -7,10 +7,12 @@ class Graph {
 private:
 	int V;
 	std::vector<int>* adj;
+	bool directed;
 	
 public:
-	Graph(int V);
+	Graph(int V, bool directed);
 	int getV();
+	bool isDirected();
 	void add_edge(int v, int u);
 	void add_undir_edge(int v, int u);
 	std::vector<int> get_neighbors(int v);
@@ -31,6 +33,9 @@ public:
 	// in every connected component, the number of edges is one less than the 
 	// number of vertices 
 	std::vector<int> is_acyclic();
+	// the following function returns a topological sort of a DAG. if the graph is
+	// not a DAG, it return an empty vector
+	std::vector<int> topological_sort();
 };
 
 
