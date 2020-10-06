@@ -1,4 +1,4 @@
-SRCS = graph.cpp main.cpp
+SRCS = graph.cpp bfs.cpp dfs.cpp connected_components_undir.cpp acyclic.cpp top_sort.cpp main.cpp
 HDRS = graph.h 
 OBJS = $(SRCS:.c=.o)
 EXE = graph

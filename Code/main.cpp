@@ -1,4 +1,5 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <algorithm>
 #include "graph.h"
 
 using namespace std;
@@ -6,6 +7,7 @@ using namespace std;
 // tests for undirected graph
 Graph* create_undir_graph();
 void run_DFS(Graph* g, int v);
+void run_BFS(Graph* g, int v);
 void print_connected_components(Graph* g);
 void acyclic(Graph* g);
 
@@ -15,14 +17,19 @@ void print_top_sort(Graph* g);
 
 int main() {
 	
+	cout << "Testing undirected graph!" << endl;
 	Graph* g_undir = create_undir_graph();
 	run_DFS(g_undir, 2);
+	run_BFS(g_undir, 3);
 	print_connected_components(g_undir);
 	acyclic(g_undir);
 
-	// Graph* g_dir = create_dir_graph();
-	// acyclic(g_dir);
-	// print_top_sort(g_dir);
+
+	cout << endl << endl << "Testing directed graph!" << endl;
+
+	Graph* g_dir = create_dir_graph();
+	acyclic(g_dir);
+	print_top_sort(g_dir);
 
 	return 0;
 }
@@ -42,6 +49,11 @@ Graph* create_undir_graph() {
 void run_DFS(Graph* g, int v) {
 	cout << "Running DFS from " << v << endl;
 	g->DFS(v);
+	cout << endl;
+}
+void run_BFS(Graph* g, int v) {
+	cout << "Running BFS from " << v << endl;
+	g->BFS(v);
 	cout << endl;
 }
 
