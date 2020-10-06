@@ -19,7 +19,6 @@ vector<int> Graph::find_connected_components() {
 			curr_comp++;
 			connnected_components_helper(this, v, curr_comp, components, visited);
 		}
-
 	}
 	return components;
 }

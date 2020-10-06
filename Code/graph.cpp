@@ -26,3 +26,14 @@ void Graph::add_undir_edge(int v, int u) {
 vector<int> Graph::get_neighbors(int v) {
 	return this->adj[v];
 }
+void Graph::print_graph() {
+	cout << "Number of vertices = " << this->V << endl;;
+	cout << "Directed = " << this->directed << endl;
+	cout << "Adjacency list as follows:" << endl;
+	for(int v = 0; v < V; v++) { 
+		cout << "adj[" << v << "] = {";
+		for(int u: this->adj[v])
+			cout << u << " ";
+		cout << "}" << endl;
+	}
+}

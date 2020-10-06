@@ -19,6 +19,7 @@ public:
 	void add_edge(int v, int u);
 	void add_undir_edge(int v, int u);
 	std::vector<int> get_neighbors(int v);
+	void print_graph();
 
 	/*
 		The following functions print a BFS/DFS traversal from an input vertex v.
@@ -55,6 +56,19 @@ public:
 		not a DAG, it return an empty vector.
 	*/
 	std::vector<int> topological_sort();
+
+	/*
+		The following function creates a transpose of the graph. Define for a 
+		directed graph. 
+	*/
+	Graph* getTranspose();
+
+	/*
+		The following function returns a vector where scc[i] represents the stronlgy
+		connected component the vertex i is in.
+	*/
+	std::vector<int> scc();
+
 };
 
 
