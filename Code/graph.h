@@ -69,6 +69,14 @@ public:
 	*/
 	std::vector<int> scc();
 
+	/*
+		The following function returns the DAG of Strongly Connected Components.
+		The relationship between the initial graph and this one is kept in the
+		resulting vector from the previous function.
+		That can also potentially become an instance variable of the class...
+	*/
+	Graph* DAG_of_scc();
+
 };
 
 

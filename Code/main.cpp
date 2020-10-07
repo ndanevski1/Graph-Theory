@@ -16,6 +16,9 @@ Graph* create_dir_graph();
 void print_top_sort(Graph* g);
 void test_transpose(Graph* g);
 void test_scc(Graph* g);
+Graph* create_messy_graph();
+
+
 int main() {
 	
 	// cout << "Testing undirected graph!" << endl;
@@ -25,13 +28,18 @@ int main() {
 	// print_connected_components(g_undir);
 	// acyclic(g_undir);
 
-	cout << endl << endl << "Testing directed graph!" << endl;
-	Graph* g_dir = create_dir_graph();
-	acyclic(g_dir);
-	print_top_sort(g_dir);
-	test_transpose(g_dir);
-	test_scc(g_dir);
+	// cout << endl << endl << "Testing directed graph!" << endl;
+	// Graph* g_dir = create_dir_graph();
+	// acyclic(g_dir);
+	// print_top_sort(g_dir);
+	// test_transpose(g_dir);
+	// test_scc(g_dir);
 
+	Graph* g_messy = create_messy_graph();
+	test_scc(g_messy);
+	Graph* dag_of_scc = g_messy->DAG_of_scc();
+	cout << "Printing the DAG of strongly connected components:" << endl;
+	dag_of_scc->print_graph();
 	return 0;
 }
 
@@ -116,7 +124,36 @@ void test_transpose(Graph* g) {
 }
 
 void test_scc(Graph* g) {
+	cout << "Strongly connected components of the following graph:" << endl;
+	g->print_graph();
+	cout << endl;
 	vector<int> scc = g->scc();
 	for(int i = 0; i < g->getV(); i++)
-		cout << i << " is in component " << scc[i] << endl;
+		cout << "Vertex " << i << " is in strongly connected component #" << scc[i] << endl;
+	cout << endl;
+}
+
+Graph* create_messy_graph() {
+	Graph* g = new Graph(10, true);
+	// we will have three cycles of 3 vertices, one separate vertex and links between each of these scc
+	// this is an example graph shown in class
+	// 1st cycle
+	g->add_edge(7, 8);
+	g->add_edge(8, 9);
+	g->add_edge(9, 7);
+	// 2nd cycle
+	g->add_edge(6, 4);
+	g->add_edge(4, 5);
+	g->add_edge(5, 6);
+	// 3rd cycle
+	g->add_edge(3, 1);
+	g->add_edge(1, 2);
+	g->add_edge(2, 3);
+	// the links between them
+	g->add_edge(0, 2);
+	g->add_edge(2, 8);
+	g->add_edge(3, 7);
+	g->add_edge(2, 4);
+	g->add_edge(8, 6);
+	return g;
 }
