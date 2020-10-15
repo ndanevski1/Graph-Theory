@@ -1,14 +1,16 @@
 #include "weightGraph.h"
 #include <iostream>
 #include <vector>
+#include <queue>
 #include <climits>
+#include <utility>
 
 using namespace std;
 
 WeightedGraph::WeightedGraph(int V, bool directed) {
 	this->V = V;
 	this->directed = directed;
-	adj = new vector<vector<int>>[V];
+	adj = new vector<iPair>[V];
 }
 
 int WeightedGraph::getV() {
@@ -18,17 +20,14 @@ bool WeightedGraph::isDirected() {
 	return this->directed;
 }
 void WeightedGraph::add_edge(int v, int u, int w) {
-    vector<int> new_edge;
-    new_edge.push_back(u);
-    new_edge.push_back(w);
-    this->adj[v].push_back(new_edge);
+    this->adj[v].push_back(make_pair(u, w));
 }
 void WeightedGraph::add_undir_edge(int v, int u, int w) {
 	this->add_edge(v, u, w);
     this->add_edge(u, v, w);
 }
 
-vector<vector<int>> WeightedGraph::get_neighbors(int v) {
+vector<iPair> WeightedGraph::get_neighbors(int v) {
 	return this->adj[v];
 }
 void WeightedGraph::print_graph() {
@@ -37,8 +36,8 @@ void WeightedGraph::print_graph() {
 	cout << "Adjacency list as follows:" << endl;
 	for(int v = 0; v < V; v++) { 
 		cout << "adj[" << v << "] = {";
-		for(vector<int> u_w: this->adj[v])
-			cout << "(" << u_w[0] << ", " << u_w[1] << ") ";
+		for(auto neighbor: this->adj[v])
+			cout << "(" << neighbor.first << ", " << neighbor.second << ") ";
 		cout << "}" << endl;
 	}
 }
@@ -67,11 +66,45 @@ vector<int> WeightedGraph::dijkstra_bad(int s) {
 
 		if(closest_vertex < this->getV()) {
 			visited[closest_vertex] = true;
-			for(vector<int> neighbor: this->get_neighbors(closest_vertex)) {
-				distance[neighbor[0]] = min(distance[neighbor[0]], distance[closest_vertex] + neighbor[1]);
+			for(auto neighbor: this->get_neighbors(closest_vertex)) {
+				int v = neighbor.first;
+				int w = neighbor.second;
+				distance[v] = min(distance[v], distance[closest_vertex] + w);
 			}
 		}
 	}
+	return distance;
+}
 
+
+vector<int> WeightedGraph::dijkstra_good(int s) {
+	vector<int> distance(this->V, INT_MAX);
+	distance[s] = 0;
+
+	// The priority queue will hold a pair (d, v) representing the distance d to the vertex v. 
+	// Because d is the first number in the pair, it will sort accordingly
+	priority_queue<iPair,vector<iPair>,greater<iPair>> pq;
+
+	pq.push(make_pair(0, s));
+	
+	while(!pq.empty()) {
+		iPair current = pq.top();
+		pq.pop();
+		int curr_dist = current.first;
+		int curr_vertex = current.second;
+
+		// cout << "Current in queue: " << curr_vertex << ", with distance = " << curr_dist << endl;
+ 
+
+		for(auto neighbor: this->get_neighbors(curr_vertex)) {
+			int v = neighbor.first;
+			int w = neighbor.second;
+			int new_distance = curr_dist + w;
+			if(new_distance < distance[v]) {
+				distance[v] = new_distance;
+				pq.push(make_pair(new_distance, v));
+			}
+		}
+	}
 	return distance;
 }

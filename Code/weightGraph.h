@@ -2,11 +2,17 @@
 #define _weightGraph_h
 
 #include <vector>
+#include <utility>
+
+/*
+    A pair of integers, used for neighboring vertex and cost of getting to there.
+*/
+typedef std::pair<int, int> iPair;
 
 class WeightedGraph {
     private:
         int V;
-        std::vector<std::vector<int>>* adj;
+        std::vector<iPair>* adj;
         bool directed;
     public:
         WeightedGraph(int V, bool directed);
@@ -17,7 +23,7 @@ class WeightedGraph {
         */
         void add_edge(int v, int u, int w);
         void add_undir_edge(int v, int u, int w);
-        std::vector<std::vector<int>> get_neighbors(int v);
+        std::vector<iPair> get_neighbors(int v);
         void print_graph();
         /*
             The following two functions are implementations of Dijkstra's algorithm. 

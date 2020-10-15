@@ -22,6 +22,7 @@ Graph* create_messy_graph();
 
 WeightedGraph* create_wg_graph();
 void test_dijkstra_bad(WeightedGraph* wg, int s);
+void test_dijkstra_good(WeightedGraph* wg, int s);
 
 int main() {
 	
@@ -49,6 +50,7 @@ int main() {
 	WeightedGraph* wg = create_wg_graph();
 	// wg->print_graph();
 	test_dijkstra_bad(wg, 0);
+	test_dijkstra_good(wg, 0);
 
 
 	return 0;
@@ -73,9 +75,18 @@ WeightedGraph* create_wg_graph() {
 }
 
 void test_dijkstra_bad(WeightedGraph* wg, int s) {
+	cout << "Testing slower Dijkstra:" << endl;
 	vector<int> distance = wg->dijkstra_bad(s);
 	for(int i = 0; i < wg->getV(); i++)
 		cout << "Distance from " << s << " to " << i << " is " << distance[i] << endl;
+	cout << endl;
+}
+void test_dijkstra_good(WeightedGraph* wg, int s) {
+	cout << "Testing faster Dijkstra:" << endl;
+	vector<int> distance = wg->dijkstra_good(s);
+	for(int i = 0; i < wg->getV(); i++)
+		cout << "Distance from " << s << " to " << i << " is " << distance[i] << endl;
+	cout << endl;
 }
 
 
