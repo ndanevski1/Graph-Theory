@@ -1,6 +1,8 @@
 #include <iostream>
 #include <algorithm>
 #include "graph.h"
+#include "weightGraph.h"
+
 
 using namespace std;
 
@@ -18,6 +20,8 @@ void test_transpose(Graph* g);
 void test_scc(Graph* g);
 Graph* create_messy_graph();
 
+WeightedGraph* create_wg_graph();
+void test_dijkstra_bad(WeightedGraph* wg, int s);
 
 int main() {
 	
@@ -35,13 +39,46 @@ int main() {
 	// test_transpose(g_dir);
 	// test_scc(g_dir);
 
-	Graph* g_messy = create_messy_graph();
-	test_scc(g_messy);
-	Graph* dag_of_scc = g_messy->DAG_of_scc();
-	cout << "Printing the DAG of strongly connected components:" << endl;
-	dag_of_scc->print_graph();
+	// Graph* g_messy = create_messy_graph();
+	// test_scc(g_messy);
+	// Graph* dag_of_scc = g_messy->DAG_of_scc();
+	// cout << "Printing the DAG of strongly connected components:" << endl;
+	// dag_of_scc->print_graph();
+	// acyclic(g_messy);
+
+	WeightedGraph* wg = create_wg_graph();
+	// wg->print_graph();
+	test_dijkstra_bad(wg, 0);
+
+
 	return 0;
 }
+
+WeightedGraph* create_wg_graph() {
+	WeightedGraph* wg = new WeightedGraph(9, false);
+	wg->add_undir_edge(0,1,4);
+	wg->add_undir_edge(0,7,8);
+	wg->add_undir_edge(1,2,8);
+	wg->add_undir_edge(1,7,11);
+	wg->add_undir_edge(2,3,7);
+	wg->add_undir_edge(2,5,4);
+	wg->add_undir_edge(3,4,9);
+	wg->add_undir_edge(3,5,14);
+	wg->add_undir_edge(4,5,10);
+	wg->add_undir_edge(5,6,2);
+	wg->add_undir_edge(6,7,1);
+	wg->add_undir_edge(6,8,6);
+	wg->add_undir_edge(7,8,7);
+	return wg;
+}
+
+void test_dijkstra_bad(WeightedGraph* wg, int s) {
+	vector<int> distance = wg->dijkstra_bad(s);
+	for(int i = 0; i < wg->getV(); i++)
+		cout << "Distance from " << s << " to " << i << " is " << distance[i] << endl;
+}
+
+
 
 Graph* create_undir_graph() {
 	Graph* g = new Graph(8, false);

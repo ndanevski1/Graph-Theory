@@ -1,5 +1,5 @@
-SRCS = graph.cpp bfs.cpp dfs.cpp connected_components_undir.cpp acyclic.cpp top_sort.cpp strongly_connected_components.cpp main.cpp
-HDRS = graph.h 
+SRCS = graph.cpp bfs.cpp dfs.cpp connected_components_undir.cpp acyclic.cpp top_sort.cpp strongly_connected_components.cpp weightGraph.cpp main.cpp
+HDRS = graph.h weightGraph.h
 OBJS = $(SRCS:.c=.o)
 EXE = graph
 

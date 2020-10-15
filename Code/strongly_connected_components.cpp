@@ -65,17 +65,14 @@ void scc_secondDFS(Graph* g, int v, vector<bool>& visited, vector<int>& componen
             scc_secondDFS(g, u, visited, components, c);
 }
 
-void remove_duplicates(vector<int> v);
 Graph* Graph::DAG_of_scc() {
     vector<int> scc = this->scc();
     int newV = *max_element(scc.begin(), scc.end()) + 1;
-    Graph* newDAG = new Graph(newV, newV);
+    Graph* newDAG = new Graph(newV, true);
 
-    vector<bool> visited(this->V, false);
     vector<set<int>> newAdj(newV);
-
     // I use hashset to avoid the case when there are two edges between two scc's.
-    // This could potentially be improved but this solution is still in O(m+n) which is least possible.`
+    // This could potentially be improved but this solution is still in O(m+n) in average.
     for(int v = 0; v < V; v++) {
         for(int u: this->adj[v]) {
             if(scc[v] != scc[u]) {
