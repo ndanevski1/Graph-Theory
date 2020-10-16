@@ -43,7 +43,7 @@ vector<int> WeightedGraph::dijkstra_bad(int s) {
 
 
 vector<int> WeightedGraph::dijkstra_good(int s) {
-	vector<int> distance(this->V, INT_MAX);
+	vector<int> distance(this->V, INT_MAX/3);
 	vector<bool> visited(this->V, false);
 	distance[s] = 0;
 

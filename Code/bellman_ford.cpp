@@ -8,7 +8,7 @@
 using namespace std;
 
 vector<int> WeightedGraph::bellman_ford(int s) {
-	vector<int> distance(this->V, INT_MAX);
+	vector<int> distance(this->V, INT_MAX/3);
 	distance[s] = 0;
 	// Repeat "relaxing" an edge as long as there is a change. Will happen at most V times.
 	bool change = true;

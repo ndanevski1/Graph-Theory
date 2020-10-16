@@ -26,6 +26,8 @@ void test_dijkstra_bad(WeightedGraph* wg, int s);
 void test_dijkstra_good(WeightedGraph* wg, int s);
 void test_bellman_ford(WeightedGraph* wg, int s);
 void test_floyd_warshall(WeightedGraph* wg, int s);
+void test_johnson(WeightedGraph* wg, int s);
+
 
 int main() {
 	
@@ -50,13 +52,15 @@ int main() {
 	// dag_of_scc->print_graph();
 	// acyclic(g_messy);
 
-	cout << "The following tests are on a graph with no negative edges:" << endl;
-	WeightedGraph* wg = create_wg_graph();
+	// cout << "The following tests are on a graph with no negative edges:" << endl;
+	// WeightedGraph* wg = create_wg_graph();
 	// wg->print_graph();
-	test_dijkstra_bad(wg, 0);
-	test_dijkstra_good(wg, 0);
-	test_bellman_ford(wg, 0);
-	test_floyd_warshall(wg, 0);
+	// test_dijkstra_bad(wg, 0);
+	// test_dijkstra_good(wg, 0);
+	// test_bellman_ford(wg, 0);
+	// test_floyd_warshall(wg, 0);
+	// test_johnson(wg, 0);
+	
 
 	cout << "The following tests are on a graph with possibly negative edges but no negative cycles:" << endl;
 	WeightedGraph* wg_neg = create_wg_neg_graph();
@@ -65,9 +69,8 @@ int main() {
 	test_dijkstra_good(wg_neg, 0);
 	test_bellman_ford(wg_neg, 0);
 	test_floyd_warshall(wg_neg, 0);
-
+	test_johnson(wg_neg, 0);
 	
-
 	return 0;
 }
 
@@ -127,11 +130,13 @@ void test_floyd_warshall(WeightedGraph* wg, int s) {
 		cout << "Distance from " << s << " to " << i << " is " << distance[s][i] << endl;
 	cout << endl;
 }
-
-
-
-
-
+void test_johnson(WeightedGraph* wg, int s) {
+	vector<vector<int>> distance = wg->johnson();
+	cout << "Testing Johnson:" << endl;
+	for(int i = 0; i < wg->getV(); i++)
+		cout << "Distance from " << s << " to " << i << " is " << distance[s][i] << endl;
+	cout << endl;
+}
 
 
 Graph* create_undir_graph() {

@@ -26,6 +26,11 @@ void WeightedGraph::add_undir_edge(int v, int u, int w) {
 	this->add_edge(v, u, w);
     this->add_edge(u, v, w);
 }
+void WeightedGraph::set_weight(int v, int u, int w) {
+	for(int i = 0; i < this->adj[v].size(); i++)
+		if(this->adj[v][i].first == u)
+			this->adj[v][i].second = w;	
+}
 
 vector<iPair> WeightedGraph::get_neighbors(int v) {
 	return this->adj[v];

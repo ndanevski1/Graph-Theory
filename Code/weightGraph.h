@@ -23,6 +23,7 @@ class WeightedGraph {
         */
         void add_edge(int v, int u, int w);
         void add_undir_edge(int v, int u, int w);
+        void set_weight(int v, int u, int w);
         std::vector<iPair> get_neighbors(int v);
         void print_graph();
         /*
@@ -34,6 +35,7 @@ class WeightedGraph {
         std::vector<int> dijkstra_good(int s);
         std::vector<int> bellman_ford(int s);
         std::vector<std::vector<int>> floyd_warshall();
+        std::vector<std::vector<int>> johnson();
 };
 
 
