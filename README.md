@@ -6,9 +6,10 @@ The implementation includes directed, undirected, and weighted graphs and differ
 - topological sorting, (strongly) connected components
 - DAG of strongly connected components
 - Dijkstra's Algorithm
-- Floyd-Warshall Algorithm
-- Floyd-Warshall Algorithm
 - Bellman-Ford algorithm
+- Floyd-Warshall Algorithm
+- Johnson's Algorithm
+
 
 
 ...To run, type `make` followed by `./graph`.
