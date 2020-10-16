@@ -50,6 +50,7 @@ int main() {
 	// dag_of_scc->print_graph();
 	// acyclic(g_messy);
 
+	cout << "The following tests are on a graph with no negative edges:" << endl;
 	WeightedGraph* wg = create_wg_graph();
 	// wg->print_graph();
 	test_dijkstra_bad(wg, 0);
@@ -57,6 +58,7 @@ int main() {
 	test_bellman_ford(wg, 0);
 	test_floyd_warshall(wg, 0);
 
+	cout << "The following tests are on a graph with possibly negative edges but no negative cycles:" << endl;
 	WeightedGraph* wg_neg = create_wg_neg_graph();
 	// the following two should give an incorrect result
 	test_dijkstra_bad(wg_neg, 0);
