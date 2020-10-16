@@ -79,10 +79,11 @@ vector<int> WeightedGraph::dijkstra_bad(int s) {
 
 vector<int> WeightedGraph::dijkstra_good(int s) {
 	vector<int> distance(this->V, INT_MAX);
+	vector<bool> visited(this->V, false);
 	distance[s] = 0;
 
 	// The priority queue will hold a pair (d, v) representing the distance d to the vertex v. 
-	// Because d is the first number in the pair, it will sort accordingly
+	// Because d is the first number in the pair, the comparator will work as required.
 	priority_queue<iPair,vector<iPair>,greater<iPair>> pq;
 
 	pq.push(make_pair(0, s));
@@ -93,16 +94,66 @@ vector<int> WeightedGraph::dijkstra_good(int s) {
 		int curr_dist = current.first;
 		int curr_vertex = current.second;
 
+		visited[curr_vertex] = true;
 		// cout << "Current in queue: " << curr_vertex << ", with distance = " << curr_dist << endl;
  
-
 		for(auto neighbor: this->get_neighbors(curr_vertex)) {
 			int v = neighbor.first;
 			int w = neighbor.second;
 			int new_distance = curr_dist + w;
 			if(new_distance < distance[v]) {
 				distance[v] = new_distance;
-				pq.push(make_pair(new_distance, v));
+				if(!visited[v])
+					pq.push(make_pair(new_distance, v));
+			}
+		}
+	}
+	return distance;
+}
+
+vector<int> WeightedGraph::bellman_ford(int s) {
+	vector<int> distance(this->V, INT_MAX);
+	distance[s] = 0;
+	// Repeat "relaxing" an edge as long as there is a change. Will happen at most V times.
+	bool change = true;
+	while(change) {
+		change = false;
+		for(int u = 0; u < this->V; u++) {
+			for(auto neighbor: this->get_neighbors(u)) {
+				int v = neighbor.first;
+				int w = neighbor.second;
+				if(distance[v] > distance[u] + w) {
+					distance[v] = distance[u] + w;
+					change = true;
+				}
+			}
+		}
+	}
+	return distance;
+}
+
+vector<vector<int>> WeightedGraph::floyd_warshall() {
+	vector<vector<int>> distance;
+	// Setting up the base case
+	for(int i = 0; i < this->V; i++) {
+		// initially set to inf/3 because of overflow
+		vector<int> d(this->V, INT_MAX/3);
+		distance.push_back(d);
+		distance[i][i] = 0;
+	}
+	// The first edges
+	for(int u = 0; u < this->V; u++) {
+		for(auto neighbor: this->get_neighbors(u)) {
+			int v = neighbor.first;
+			int w = neighbor.second;
+			distance[u][v] = w;
+		}
+	}
+	// Dynamic programming step
+	for(int k = 0; k < this->V; k++) {
+		for(int u = 0; u < this->V; u++) {
+			for(int v = 0; v < this->V; v++) {
+				distance[u][v] = min(distance[u][v], distance[u][k] + distance[k][v]);
 			}
 		}
 	}

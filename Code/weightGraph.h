@@ -32,6 +32,8 @@ class WeightedGraph {
         */
         std::vector<int> dijkstra_bad(int s);
         std::vector<int> dijkstra_good(int s);
+        std::vector<int> bellman_ford(int s);
+        std::vector<std::vector<int>> floyd_warshall();
 };
 
 

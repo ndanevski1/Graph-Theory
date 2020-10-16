@@ -21,8 +21,11 @@ void test_scc(Graph* g);
 Graph* create_messy_graph();
 
 WeightedGraph* create_wg_graph();
+WeightedGraph* create_wg_neg_graph();
 void test_dijkstra_bad(WeightedGraph* wg, int s);
 void test_dijkstra_good(WeightedGraph* wg, int s);
+void test_bellman_ford(WeightedGraph* wg, int s);
+void test_floyd_warshall(WeightedGraph* wg, int s);
 
 int main() {
 	
@@ -51,7 +54,17 @@ int main() {
 	// wg->print_graph();
 	test_dijkstra_bad(wg, 0);
 	test_dijkstra_good(wg, 0);
+	test_bellman_ford(wg, 0);
+	test_floyd_warshall(wg, 0);
 
+	WeightedGraph* wg_neg = create_wg_neg_graph();
+	// the following two should give an incorrect result
+	test_dijkstra_bad(wg_neg, 0);
+	test_dijkstra_good(wg_neg, 0);
+	test_bellman_ford(wg_neg, 0);
+	test_floyd_warshall(wg_neg, 0);
+
+	
 
 	return 0;
 }
@@ -74,6 +87,16 @@ WeightedGraph* create_wg_graph() {
 	return wg;
 }
 
+WeightedGraph* create_wg_neg_graph() {
+	WeightedGraph* wg = new WeightedGraph(5, false);
+	wg->add_edge(0, 1, 1);
+	wg->add_edge(0, 2, 10);
+	wg->add_edge(1, 3, 1);
+	wg->add_edge(3, 4, 1);
+	wg->add_edge(2, 1, -20);
+	return wg;
+}
+
 void test_dijkstra_bad(WeightedGraph* wg, int s) {
 	cout << "Testing slower Dijkstra:" << endl;
 	vector<int> distance = wg->dijkstra_bad(s);
@@ -88,6 +111,24 @@ void test_dijkstra_good(WeightedGraph* wg, int s) {
 		cout << "Distance from " << s << " to " << i << " is " << distance[i] << endl;
 	cout << endl;
 }
+void test_bellman_ford(WeightedGraph* wg, int s) {
+	cout << "Testing Bellman-Ford:" << endl;
+	vector<int> distance = wg->bellman_ford(s);
+	for(int i = 0; i < wg->getV(); i++)
+		cout << "Distance from " << s << " to " << i << " is " << distance[i] << endl;
+	cout << endl;
+}
+void test_floyd_warshall(WeightedGraph* wg, int s) {
+	vector<vector<int>> distance = wg->floyd_warshall();
+	cout << "Testing Floyd-Warshall:" << endl;
+	for(int i = 0; i < wg->getV(); i++)
+		cout << "Distance from " << s << " to " << i << " is " << distance[s][i] << endl;
+	cout << endl;
+}
+
+
+
+
 
 
 
