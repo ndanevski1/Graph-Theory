@@ -77,6 +77,14 @@ public:
 	*/
 	Graph* DAG_of_scc();
 
+	/*
+		The following function returns whether or not the graph is bipartite.
+		It takes two references to vectors blue and red, which would keep the
+		vertices in that color
+	*/
+
+	bool isBipartite(std::vector<int>& blue, std::vector<int>& red);
+
 };
 
 

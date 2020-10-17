@@ -27,7 +27,7 @@ vector<vector<int>> WeightedGraph::johnson() {
     // after running bellman ford
     vector<int> phi = new_wg->bellman_ford(new_vertex);
 
-    // We pop because phi bellman ford will calculate the distance from new_vertex
+    // We pop because bellman ford will calculate the distance from new_vertex
     // to itself which we don't need
     phi.pop_back();
     cout << endl;

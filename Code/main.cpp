@@ -12,6 +12,7 @@ void run_DFS(Graph* g, int v);
 void run_BFS(Graph* g, int v);
 void print_connected_components(Graph* g);
 void acyclic(Graph* g);
+void bipartite(Graph* g);
 
 // tests for directed graph
 Graph* create_dir_graph();
@@ -27,16 +28,17 @@ void test_dijkstra_good(WeightedGraph* wg, int s);
 void test_bellman_ford(WeightedGraph* wg, int s);
 void test_floyd_warshall(WeightedGraph* wg, int s);
 void test_johnson(WeightedGraph* wg, int s);
-
+void bipartite(Graph* g);
 
 int main() {
 	
-	// cout << "Testing undirected graph!" << endl;
-	// Graph* g_undir = create_undir_graph();
-	// run_DFS(g_undir, 2);
-	// run_BFS(g_undir, 3);
-	// print_connected_components(g_undir);
-	// acyclic(g_undir);
+	cout << "Testing undirected graph!" << endl;
+	Graph* g_undir = create_undir_graph();
+	run_DFS(g_undir, 2);
+	run_BFS(g_undir, 3);
+	print_connected_components(g_undir);
+	acyclic(g_undir);
+	bipartite(g_undir);
 
 	// cout << endl << endl << "Testing directed graph!" << endl;
 	// Graph* g_dir = create_dir_graph();
@@ -62,14 +64,14 @@ int main() {
 	// test_johnson(wg, 0);
 	
 
-	cout << "The following tests are on a graph with possibly negative edges but no negative cycles:" << endl;
-	WeightedGraph* wg_neg = create_wg_neg_graph();
-	// the following two should give an incorrect result
-	test_dijkstra_bad(wg_neg, 0);
-	test_dijkstra_good(wg_neg, 0);
-	test_bellman_ford(wg_neg, 0);
-	test_floyd_warshall(wg_neg, 0);
-	test_johnson(wg_neg, 0);
+	// cout << "The following tests are on a graph with possibly negative edges but no negative cycles:" << endl;
+	// WeightedGraph* wg_neg = create_wg_neg_graph();
+	// // the following two should give an incorrect result
+	// test_dijkstra_bad(wg_neg, 0);
+	// test_dijkstra_good(wg_neg, 0);
+	// test_bellman_ford(wg_neg, 0);
+	// test_floyd_warshall(wg_neg, 0);
+	// test_johnson(wg_neg, 0);
 	
 	return 0;
 }
@@ -140,7 +142,7 @@ void test_johnson(WeightedGraph* wg, int s) {
 
 
 Graph* create_undir_graph() {
-	Graph* g = new Graph(8, false);
+	Graph* g = new Graph(6, false);
 	g->add_undir_edge(0,1);
 	g->add_undir_edge(0,3);
 	g->add_undir_edge(0,5);
@@ -178,8 +180,29 @@ void acyclic(Graph* g) {
 			reverse(cycle.begin(), cycle.end());
 		for(int v: cycle)
 			cout << v << " ";
+		cout << endl;
 	}
 	cout << endl;
+}
+
+void bipartite(Graph* g) {
+	cout << "Testing bipartition:" << endl;
+	vector<int> blue, red;
+	bool is_bipartite = g->isBipartite(blue, red);
+	if(is_bipartite == true) {
+		cout << "The graph is bipartite." << endl;
+		cout << "\tRed: ";
+		for(auto vertex: red)
+			cout << vertex << " ";
+		cout << endl;
+		cout << "\tBlue: ";
+		for(auto vertex: blue)
+			cout << vertex << " ";
+		cout << endl;		
+	}
+	else {
+		cout << "The graph isn't bipartite." << endl;
+	}
 }
 
 Graph* create_dir_graph() {
