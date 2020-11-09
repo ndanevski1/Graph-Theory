@@ -40,12 +40,15 @@ int main() {
 	acyclic(g_undir);
 	bipartite(g_undir);
 
+	delete g_undir;
+
 	// cout << endl << endl << "Testing directed graph!" << endl;
 	// Graph* g_dir = create_dir_graph();
 	// acyclic(g_dir);
 	// print_top_sort(g_dir);
 	// test_transpose(g_dir);
 	// test_scc(g_dir);
+	// delete g_dir;
 
 	// Graph* g_messy = create_messy_graph();
 	// test_scc(g_messy);
@@ -53,6 +56,7 @@ int main() {
 	// cout << "Printing the DAG of strongly connected components:" << endl;
 	// dag_of_scc->print_graph();
 	// acyclic(g_messy);
+	// delete g_messy;
 
 	// cout << "The following tests are on a graph with no negative edges:" << endl;
 	// WeightedGraph* wg = create_wg_graph();
@@ -62,6 +66,7 @@ int main() {
 	// test_bellman_ford(wg, 0);
 	// test_floyd_warshall(wg, 0);
 	// test_johnson(wg, 0);
+	// delete wg;
 	
 
 	// cout << "The following tests are on a graph with possibly negative edges but no negative cycles:" << endl;
@@ -72,6 +77,7 @@ int main() {
 	// test_bellman_ford(wg_neg, 0);
 	// test_floyd_warshall(wg_neg, 0);
 	// test_johnson(wg_neg, 0);
+	// delete wg_neg;
 	
 	return 0;
 }
